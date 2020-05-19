@@ -36,13 +36,13 @@ RUN for key in \
     A48C2BEE680E841632CD4E44F07496B3EB3C1762 \
     B9E2F5981AA6E0CD28160D9FF13993A75599653C \
     ; do \
-    gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key"; \
+    gpg --batch --keyserver hkps://keyserver.ubuntu.org --recv-keys "$key"; \
     done
 
 # grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.12
 RUN set -x \
-    && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"
+    && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
     && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
     && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
     && export GNUPGHOME="$(mktemp -d)" \
